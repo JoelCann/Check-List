@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Header from './Header';
+import BulletPoint from "./BulletPoint";
+import Form from './Form';
 
 function App() {
 
@@ -8,46 +11,48 @@ function App() {
 
 
   //function to handle changes from the controlled input field.
-  function handlInputChange(e) {
+  function handleInputChange(e) {
     const text = e.target.value;
     setItem(text);
-    console.log(text);;
   }
 
 
   //functin to add value from input field to array after button is clicked.
   function addToArray() {
-    setList((prevValue) => {
-      return (
-        [...prevValue, item]
-      )
-    })
-
+    if (item === "") {
+      return null;
+    }
+    else {
+      setList((prevValue) => {
+        return (
+          [...prevValue, item]
+        )
+      })
+      setItem("")
+    }
   }
+
+
 
   return (
     <div className="container">
-      <div className="heading">
-        <h1>To-Do List</h1>
-      </div>
-      <div className="form">
-        <input value={item} type="text" onChange={handlInputChange} />
-        <button onClick={addToArray}>
-          <span>Add</span>
-        </button>
-      </div>
-      <div>
+      <Header />
+      <Form
+        input_value={item}
+        input_type="text"
+        input_onChange={handleInputChange}
+        btn_onClick={addToArray}
+      />
 
+      <div>
         {/*javascript code below here loops through the array and itemises each entry in an unordered list*/}
         {list.map(itemised => {
           return (
-            <ul>
-              <li>{itemised}</li>
-            </ul>
+            <BulletPoint
+              bullet={itemised}
+            />
           )
-
         })}
-
       </div>
     </div>
   );
