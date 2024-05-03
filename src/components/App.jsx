@@ -32,6 +32,16 @@ function App() {
     }
   }
 
+  //This function below, deletes a specific item from the array by filtering, using its Id.
+  function deleteBullet(targetId) {
+
+    setList(prevValues => {
+      return prevValues.filter((items, index) => {
+        return index !== targetId
+      })
+    })
+
+  }
 
 
   return (
@@ -45,11 +55,14 @@ function App() {
       />
 
       <div>
-        {/*javascript code below here loops through the array and itemises each entry in an unordered list*/}
-        {list.map(itemised => {
+        {/*javascript/jsx code below here loops through the array and itemises each entry in an unordered list*/}
+        {list.map((itemised, index) => {
           return (
             <BulletPoint
+              key={index}
+              targetId={index}
               bullet={itemised}
+              delete={deleteBullet}
             />
           )
         })}
